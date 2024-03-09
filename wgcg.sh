@@ -377,9 +377,10 @@ gen_server_config() {
   fi
 
   if [[ -f ${server_private_key} ]]; then
-    echo -e "${YELLOW}WARNING${NONE}: This is destructive operation, also it will require regeneration of all client configs!"
-    echo -ne "Server config and keys are already generated, do you want to overwrite it? (${GREEN}yes${NONE}/${RED}no${NONE}): "
-    read answer
+    # echo -e "${YELLOW}WARNING${NONE}: This is destructive operation, also it will require regeneration of all client configs!"
+    # echo -ne "Server config and keys are already generated, do you want to overwrite it? (${GREEN}yes${NONE}/${RED}no${NONE}): "
+    # read answer
+    answer="no"
 
     [[ ${answer} != "yes" ]] && exit 1
   fi
@@ -391,8 +392,8 @@ gen_server_config() {
 Address = ${server_wg_ip}/${cidr}
 ListenPort = ${server_port}
 PrivateKey = $(head -1 ${server_private_key})
-PreUp = /usr/local/bin/wgfw.sh add
-PostDown = /usr/local/bin/wgfw.sh del
+#PreUp = /usr/local/bin/wgfw.sh add
+#PostDown = /usr/local/bin/wgfw.sh del
 EOF
 
   touch ${server_generated}
