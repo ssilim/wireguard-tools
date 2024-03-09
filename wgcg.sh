@@ -395,8 +395,8 @@ gen_server_config() {
 Address = ${server_wg_ip}/${cidr}
 ListenPort = ${server_port}
 PrivateKey = $(head -1 ${server_private_key})
-#PreUp = /usr/local/bin/wgfw.sh add
-#PostDown = /usr/local/bin/wgfw.sh del
+PreUp = /usr/local/bin/wg_iptables.sh ${server_name} add
+PostDown = /usr/local/bin/wg_iptables.sh ${server_name} del
 EOF
 
     touch ${server_generated}
@@ -421,7 +421,7 @@ gen_client_config() {
   local preshared_key="${WORKING_DIR}/preshared.key"
   local client_private_key="${WORKING_DIR}/client-${client_name}-private.key"
   local client_public_key="${WORKING_DIR}/client-${client_name}-public.key"
-  local client_config="${WORKING_DIR}/client-${client_name}.conf"
+  local client_config="${WORKING_DIR}/client_${client_name}.conf"
   local server_public_key="${WORKING_DIR}/server-${server_name}-public.key"
   local server_config="${WORKING_DIR}/server-${server_name}.conf"
   local server_generated="${WORKING_DIR}/.server-${server_name}.generated"
